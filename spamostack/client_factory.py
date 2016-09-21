@@ -16,7 +16,7 @@ class OSClient(object):
         '''
 
         self.cache = cache
-        self.client_module = None
+        self.module = None
         self.client = None
         self._session = None
 
@@ -35,7 +35,7 @@ class OSClient(object):
     def make(self):
         '''Makes an instance of client'''
 
-        return self.client_module.Client(session=self.session.session)
+        return self.module.Client(session=self.session.session)
 
 
 class Keystone(OSClient):
@@ -50,9 +50,8 @@ class Keystone(OSClient):
         super(Keystone).__init__(cache)
 
         from keystoneclient.v3 import client
-        self.client_module = client
+        self.module = client
         self._session = Session(cache, self)
-        self.client = self.make()
 
     def project_create(self):
         pass
