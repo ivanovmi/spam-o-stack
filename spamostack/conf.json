@@ -1,0 +1,8 @@
+{
+  "keystone": {"project_create": [60, 3, 2],
+               "project_update": [60, 2, 2],
+               "user_create": [60, 5, 2],
+               "user_update": [120, 12, 1]
+              },
+  "newton":   {}
+}
