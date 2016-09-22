@@ -21,4 +21,3 @@ class Simulator(object):
 
         #for client in self.clients:
         #    func = getattr(client, self.method_name)
-            
