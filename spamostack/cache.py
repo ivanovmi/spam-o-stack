@@ -1,7 +1,5 @@
 import leveldb
 
-import pickle
-pickle.dumps(obj, protocol)
 
 class Cache(object):
     def __init__(self, path='./db'):
@@ -19,13 +17,13 @@ class Cache(object):
     def load(self):
         '''Load db into cache'''
 
-        for key, val in self.db.RangeIter():
-            self.cache[key] = eval(val)
+        for key, value in self.db.RangeIter():
+            self.cache[key] = eval(value)
 
     def update(self):
         '''Update existing db with data from cache'''
 
         batch = leveldb.WriteBatch()
-        for key, val in self.cache.iteritems():
-            self.db.Put(key, str(val))
+        for key, value in self.cache.iteritems():
+            self.db.Put(key, str(value))
         self.db.Write(batch, sync=True)

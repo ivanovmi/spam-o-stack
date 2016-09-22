@@ -31,14 +31,14 @@ class Session(object):
     def new_session(self):
         '''Initiate new session'''
 
-        for key, val in self.cache["keystone"]["users"]:
-            if not val["used"]:
-                auth = v3.Password(auth_url=val["auth_url"],
-                                   username=val["username"],
-                                   password=val["password"],
-                                   project_name=val["project_name"],
-                                   user_domain_id=val["user_domain_id"],
-                                   project_domain_id=["project_domain_id"])
+        for key, value in self.cache["keystone"]["users"]:
+            if not value["used"]:
+                auth = v3.Password(auth_url=value["auth_url"],
+                                   username=value["username"],
+                                   password=value["password"],
+                                   project_name=value["project_name"],
+                                   user_domain_id=value["user_domain_id"],
+                                   project_domain_id=value["project_domain_id"])
                 self.cache["keystone"]["users"][key]["used"] = True
                 self.user = self.cache["keystone"]["users"][key]
 
