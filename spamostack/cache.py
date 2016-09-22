@@ -1,5 +1,7 @@
 import leveldb
 
+import pickle
+pickle.dumps(obj, protocol)
 
 class Cache(object):
     def __init__(self, path='./db'):

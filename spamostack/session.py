@@ -3,7 +3,7 @@ from keystoneauth1 import session
 
 
 class Session(object):
-    def __init__(self, cache, parent):
+    def __init__(self, cache, parent=None):
         '''
         Create instance of `Session` class
 
