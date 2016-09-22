@@ -4,12 +4,12 @@ from keystoneauth1 import session
 
 class Session(object):
     def __init__(self, cache, parent=None):
-        '''
+        """
         Create instance of `Session` class
 
         @param cahce: Reference to the cache
         @type cache: spamostack.cache.Cache
-        '''
+        """
 
         self.user = None
         self.cache = cache
@@ -29,7 +29,7 @@ class Session(object):
         del self._session
 
     def new_session(self):
-        '''Initiate new session'''
+        """Initiate new session"""
 
         for key, val in self.cache["keystone"]["users"]:
             if not val["used"]:
@@ -46,7 +46,7 @@ class Session(object):
         return None
 
     def interrupt_session(self):
-        '''Interrupt old session'''
+        """Interrupt old session"""
 
         if self.session:
             self.user["used"] = False

@@ -8,8 +8,7 @@ class Simulator(object):
         self.clients = clients
 
     def simulate(self):
-        '''Simulates an action concurrently'''
+        """Simulates an action concurrently"""
 
         for client in self.clients:
             func = getattr(client, self.method_name)
-            
