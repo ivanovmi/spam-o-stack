@@ -27,20 +27,20 @@ class Simulator(CommonMethods, object):
     def simulate(self):
         """Simulate an actions"""
 
-        def loop(pipe, parent_obj):
+        def loop(pipe_client, pipe, parent_obj):
             for key, value in pipe.iteritems():
                 attr = getattr(parent_obj, key)
 
                 if isinstance(value, dict):
-                    loop(value, attr)
+                    loop(pipe_client, value, attr)
                 else:
-                    self.rotate(attr, *value)
+                    self.rotate(pipe_client, attr, *value)
 
         for pipe_client, pipe in self.pipeline.iteritems():
             client = getattr(self.client_factory, pipe_client)(self.session)
-            loop(pipe, client)
+            loop(pipe_client, pipe, client)
 
-    def rotate(self, func, period, number, count):
+    def rotate(self, name, func, period, number, count):
         """
         Execute method specific number of times in the period and repeat it
         specific number of times.
@@ -57,5 +57,5 @@ class Simulator(CommonMethods, object):
 
         for cycle in xrange(count):
             for execute in xrange(number):
-                self.execute(func)
+                self.execute(name, func)
                 time.sleep(randint(0, period / number))
