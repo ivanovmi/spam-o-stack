@@ -1,17 +1,5 @@
 from session import Session
 
-import neutronclient.v2_0
-import cinderclient.v3
-import novaclient.v2
-import glanceclient.v2
-
-
-def cached(func):
-    """Cache clients"""
-
-    def wrapper(self, *args, **kwargs):
-        pass
-        
 
 class ClientFactory(object):
     def __init__(self, cache):
@@ -24,43 +12,113 @@ class ClientFactory(object):
 
         self.cache = cache
 
-    @cached
-    def keystone(self, version="3"):
+    def keystone(self, version="3", active_session=None):
         """
-        Create keystone client
+        Create Keystone client
 
         @param version: Version of the client
         @type version: `str`
         """
 
         from keystoneclient.client import Client
-        session = Session(self.cache)
 
-        client = Client(version,
-                        session=session.session)
+        if active_session is not None:
+            session = active_session
+        else:
+            session = Session(self.cache)
+
+        client = Client(version, session=session.session)
         session.parent = client
 
         return client
 
-    @cached
-    def neutron(self, version="2"):
+    def neutron(self, version="2", active_session=None):
         """
-        Create keystone client
+        Create Neutron client
 
         @param version: Version of the client
         @type version: `str`
         """
 
         from neutronclient.client import Client
-        session = Session(self.cache)
 
-        client = Client(version,
-                        session=session.session)
+        if active_session is not None:
+            session = active_session
+        else:
+            session = Session(self.cache)
+
+        client = Client(version, session=session.session)
         session.parent = client
 
         return client
 
+    def cidner(self, version="3", active_session=None):
+        """
+        Create Cinder client
+        """
 
+        from cinderclient.client import Client
+
+        if active_session is not None:
+            session = active_session
+        else:
+            session = Session(self.cache)
+
+        client = Client(version, session=session.session)
+        session.parent = client
+
+        return client
+
+    def cidner(self, version="3", active_session=None):
+        """
+        Create Cinder client
+        """
+
+        from cinderclient.client import Client
+
+        if active_session is not None:
+            session = active_session
+        else:
+            session = Session(self.cache)
+
+        client = Client(version, session=session.session)
+        session.parent = client
+
+        return client
+
+    def nova(self, version="3", active_session=None):
+        """
+        Create Nova client
+        """
+
+        from novaclient.client import Client
+
+        if active_session is not None:
+            session = active_session
+        else:
+            session = Session(self.cache)
+
+        client = Client(version, session=session.session)
+        session.parent = client
+
+        return client
+
+    def glance(self, version="3", active_session=None):
+        """
+        Create Glance client
+        """
+
+        from glanceclient.client import Client
+
+        if active_session is not None:
+            session = active_session
+        else:
+            session = Session(self.cache)
+
+        client = Client(version, session=session.session)
+        session.parent = client
+
+        return client
 
 
 

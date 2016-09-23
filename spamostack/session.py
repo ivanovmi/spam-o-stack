@@ -1,16 +1,21 @@
 from keystoneauth1.identity import v3
 from keystoneauth1 import session
 
+from common import CommonMethods
 
-class Session(object):
+
+class Session(CommonMethods, object):
     def __init__(self, cache, parent=None):
         """
         Create instance of `Session` class
 
         @param cahce: Reference to the cache
         @type cache: spamostack.cache.Cache
+        @param parent: Parent client for this session
+        @type parent: `Client`
         """
 
+        super(Session, self).__init__()
         self.user = None
         self.cache = cache
         self.parent = parent
@@ -31,16 +36,17 @@ class Session(object):
     def new_session(self):
         """Initiate new session"""
 
-        for key, value in self.cache["keystone"]["users"]:
-            if not value["used"]:
-                auth = v3.Password(auth_url=value["auth_url"],
-                                   username=value["username"],
-                                   password=value["password"],
-                                   project_name=value["project_name"],
-                                   user_domain_id=value["user_domain_id"],
-                                   project_domain_id=value["project_domain_id"])
-                self.cache["keystone"]["users"][key]["used"] = True
-                self.user = self.cache["keystone"]["users"][key]
+        self.user = self.get_unused(self.cache["users"])
+        auth = v3.Password(auth_url=self.cache["auth_url"],
+                           username=self.user.name,
+                           password=self.cache["created"]["users"]
+                                    [self.user.name]["password"],
+                           project_name=self.cache["created"]["users"]
+                                        [self.user.name]["project_name"],
+                           user_domain_id=self.user.domain_id,
+                           project_domain_id=self.cache["created"]["users"]
+                                             [self.user.name]
+                                             ["project_domain_id"])
 
                 return session.Session(auth=auth)
         return None
