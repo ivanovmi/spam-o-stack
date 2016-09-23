@@ -2,11 +2,13 @@ import random
 import string
 
 from cache import Cache
+from client_factory import ClientFactory
 
 
 class CommonMethods():
     def __init__(self, cache):
         self.cache = cache
+        self.client_factory = ClientFactory(self.cache)
 
     def get_unused(self, name, resource):
         if self.cache[name][resource]['used'] is False:
@@ -31,7 +33,4 @@ class CommonMethods():
 
         rand_part = "".join(random.choice(choice) for i in range(length))
         return prefix + rand_part
-
-    def convert_str_to_obj(self):
-        pass
 
