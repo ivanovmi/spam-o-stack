@@ -48,8 +48,7 @@ class Session(CommonMethods, object):
                                              [self.user.name]
                                              ["project_domain_id"])
 
-                return session.Session(auth=auth)
-        return None
+        return session.Session(auth=auth)
 
     def interrupt_session(self):
         """Interrupt old session"""

@@ -52,24 +52,7 @@ class ClientFactory(object):
 
         return client
 
-    def cidner(self, version="3", active_session=None):
-        """
-        Create Cinder client
-        """
-
-        from cinderclient.client import Client
-
-        if active_session is not None:
-            session = active_session
-        else:
-            session = Session(self.cache)
-
-        client = Client(version, session=session.session)
-        session.parent = client
-
-        return client
-
-    def cidner(self, version="3", active_session=None):
+    def cinder(self, version="3", active_session=None):
         """
         Create Cinder client
         """
